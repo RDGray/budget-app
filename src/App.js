@@ -7,9 +7,9 @@ function App() {
   return (
     <Container className="my-4">
       <Stack direction="horizontal" gap="2" className="mb-4">
-        <h1 className="me-auto">Budgets</h1>
-        <Button variant="primary">Add Budget</Button>
-        <Button variant="outline-primary">Add Expense</Button>
+        <h1 className="me-auto">Budget</h1>
+        <Button variant="outline-success opacity-75">Add Budget</Button>
+        <Button variant="outline-danger opacity-50">Add Expense</Button>
       </Stack>
       <div
         style={{
@@ -19,7 +19,7 @@ function App() {
           alignItems: "flex-start",
         }}
       >
-        <BudgetCard name="Entertainment" amount={200} max={1000}></BudgetCard>
+        <BudgetCard name="Entertainment" amount={100} max={1000}></BudgetCard>
       </div>
     </Container>
   );
