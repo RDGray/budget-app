@@ -8,14 +8,17 @@ export default function BudgetCard({
   amount,
   max,
   gray,
+  hideButtons,
   onAddExpenseClick,
+  onViewExpensesClick,
 }) {
   const classNames = [];
   if (amount > max) {
-    classNames.push("bg-danger", "bg-opacity-10");
+    classNames.push("bg-light-red");
   } else if (gray) {
     classNames.push("bg-light");
   }
+  let precents = (amount / max) * 100;
   return (
     <Card className={classNames.join(" ")}>
       <Card.Body>
@@ -33,22 +36,31 @@ export default function BudgetCard({
         </Card.Title>
         {max && (
           <ProgressBar
+            label={`${precents.toFixed(2)}%`}
             variant={getProgressBarVariant(amount, max)}
             min={0}
             max={max}
             now={amount}
           />
         )}
-        <Stack direction="horizontal" gap="2" className="mt-4">
-          <Button
-            variant="outline-primary opacity-50"
-            className=" ms-auto"
-            onClick={onAddExpenseClick}
-          >
-            Add Expense
-          </Button>
-          <Button variant="outline-secondary opacity-90">View Expense</Button>
-        </Stack>
+        {!hideButtons && (
+          <Stack direction="horizontal" gap="2" className="mt-4">
+            <Button
+              size="sm"
+              className="ms-auto btn-add"
+              onClick={onAddExpenseClick}
+            >
+              Add Expense
+            </Button>
+            <Button
+              onClick={onViewExpensesClick}
+              size="sm"
+              className="btn-view"
+            >
+              View Expense
+            </Button>
+          </Stack>
+        )}
       </Card.Body>
     </Card>
   );
@@ -58,5 +70,6 @@ function getProgressBarVariant(amount, max) {
   const ratio = amount / max;
   if (ratio < 0.5) return "success";
   if (ratio < 0.75) return "warning";
+
   return "danger";
 }

@@ -22,7 +22,6 @@ export const BudgetsProvider = ({ children }) => {
       return [...prevExpenses, { id: uuidV4(), description, amount, budgetId }];
     });
   }
-
   function addBudget({ name, max }) {
     setBudgets((prevBudgets) => {
       if (prevBudgets.find((budget) => budget.name === name)) {
@@ -32,7 +31,13 @@ export const BudgetsProvider = ({ children }) => {
     });
   }
   function deleteBudget({ id }) {
-    //TODO: deal with expenses
+    setExpenses((prevExpenses) => {
+      return prevExpenses.map((expense) => {
+        if (expense.budgetId !== id) return expense;
+        return { ...expense, budgetId: UNCATEGORIZED_BUDGET_ID };
+      });
+    });
+
     setBudgets((prevBudgets) => {
       return prevBudgets.filter((budget) => budget.id !== id);
     });
@@ -55,7 +60,7 @@ export const BudgetsProvider = ({ children }) => {
         deleteExpense,
       }}
     >
-      {children}{" "}
+      {children}
     </BudgetsContext.Provider>
   );
 };
